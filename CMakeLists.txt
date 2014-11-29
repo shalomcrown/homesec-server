@@ -1,5 +1,10 @@
-project(test-cppcms)
-cmake_minimum_required(VERSION 2.8)
+project(homesec-server)
+cmake_minimum_required(VERSION 2.8.3)
+
+SET(MAJOR_VERSION "0")
+SET(MINOR_VERSION "0")
+SET(PATCH_VERSION "1")
+
 aux_source_directory(src SRC_LIST)
 add_executable(${PROJECT_NAME} ${SRC_LIST})
 
@@ -9,5 +14,40 @@ find_package(CppCms REQUIRED)
 include_directories(${CppCms_INCLUDE_DIRS})
 set(LIBS ${LIBS} ${CppCms_LIBRARIES})
 
+target_link_libraries(homesec-server ${LIBS})
 
-target_link_libraries(test-cppcms ${LIBS})
+INSTALL(PROGRAMS homesec-server DESTINATION bin)
+
+SET (CMAKE_PROJECT_NAME "homesec-server")
+
+# autogenerate dependency information
+IF(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
+INCLUDE(InstallRequiredSystemLibraries)
+
+SET(CPACK_SET_DESTDIR "on")
+SET(CPACK_PACKAGING_INSTALL_PREFIX "/tmp")
+SET(CPACK_GENERATOR "DEB")
+SET (CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+
+
+SET(CPACK_PACKAGE_DESCRIPTION "Homesec server attemp with CppCms")
+SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Trial serv er")
+SET(CPACK_PACKAGE_CONTACT "shalomcrown@gmail.com")
+SET(CPACK_PACKAGE_VERSION_MAJOR "${MAJOR_VERSION}")
+SET(CPACK_PACKAGE_VERSION_MINOR "${MINOR_VERSION}")
+SET(CPACK_PACKAGE_VERSION_PATCH "${PATCH_VERSION}")
+SET(CPACK_PACKAGE_FILE_NAME "${CMAKE_PROJECT_NAME}_${MAJOR_VERSION}.${MINOR_VERSION}.${CPACK_PACKAGE_VERSION_PATCH}")
+SET(CPACK_SOURCE_PACKAGE_FILE_NAME "${CMAKE_PROJECT_NAME}_${MAJOR_VERSION}.${MINOR_VERSION}.${CPACK_PACKAGE_VERSION_PATCH}")
+#demo dependencies
+#SET(CPACK_DEBIAN_PACKAGE_DEPENDS " kate , plasma-desktop, libc6 (>= 2.1.3) ")
+
+SET(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
+#SET(CPACK_DEBIAN_PACKAGE_SECTION "kde")
+SET(CPACK_DEBIAN_ARCHITECTURE ${CMAKE_SYSTEM_PROCESSOR})
+
+SET(CPACK_COMPONENTS_ALL Libraries ApplicationData)
+INCLUDE(CPack)
+
+ENDIF(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
+
+

@@ -3,5 +3,11 @@ CMakeFiles/
 CMakeLists.txt.user
 Makefile
 cmake_install.cmake
-test-cppcms
+CPackConfig.cmake
+CPackSourceConfig.cmake
+_CPack_Packages/
+homesec-server
+homesec-server.cbp
+homesec-server_*.deb
+install_manifest.txt
 
