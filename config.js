@@ -5,5 +5,8 @@
     },
     "http" : {
         "script_names" : [ "/hello" ]
+    },
+    "logging" : {
+       "level" : "debug"
     }
 }

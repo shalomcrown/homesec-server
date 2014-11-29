@@ -2,8 +2,11 @@
 #include <cppcms/applications_pool.h>
 #include <cppcms/service.h>
 #include <cppcms/http_response.h>
+#include <cppcms/view.h>
 #include <iostream>
 
+
+#include "login_details.hpp"
 
 
 class hello : public cppcms::application {
@@ -17,12 +20,16 @@ public:
 
 void hello::main(std::string /*url*/)
 {
-   response().out() <<
-        "<html>\n"
-        "<body>\n"
-        "  <h1>Hello World</h1>\n"
-        "</body>\n"
-        "</html>\n";
+//   response().out() <<
+//        "<html>\n"
+//        "<body>\n"
+//        "  <h1>Hello World</h1>\n"
+//        "</body>\n"
+//        "</html>\n";
+
+   content::message c;
+   c.text=">>>Hello<<<";
+   render("message",c);
 }
 
 

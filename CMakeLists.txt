@@ -7,12 +7,28 @@ SET(PATCH_VERSION "1")
 
 aux_source_directory(src SRC_LIST)
 add_executable(${PROJECT_NAME} ${SRC_LIST})
+include_directories(src)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/Modules/")
 
 find_package(CppCms REQUIRED)
 include_directories(${CppCms_INCLUDE_DIRS})
 set(LIBS ${LIBS} ${CppCms_LIBRARIES})
+
+
+set(TEMPLATES src/login_details.tmpl)
+
+add_custom_command(
+   OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/login_details.cpp
+   COMMAND cppcms_tmpl_cc
+               ${TEMPLATES}
+               -o ${CMAKE_CURRENT_BINARY_DIR}/login_details.cpp
+               ${TEMPLATES}
+   DEPENDS ${TEMPLATES})
+
+
+
+
 
 target_link_libraries(homesec-server ${LIBS})
 
