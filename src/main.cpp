@@ -17,7 +17,7 @@ public:
 
 void hello::main(std::string /*url*/)
 {
-    response().out() <<
+   response().out() <<
         "<html>\n"
         "<body>\n"
         "  <h1>Hello World</h1>\n"
