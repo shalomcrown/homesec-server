@@ -6,31 +6,38 @@ SET(MINOR_VERSION "0")
 SET(PATCH_VERSION "1")
 
 aux_source_directory(src SRC_LIST)
-add_executable(${PROJECT_NAME} ${SRC_LIST})
+file(GLOB_RECURSE TEMPLATES ${PROJECT_SOURCE_DIR}/*.tmpl)
 include_directories(src)
+
+find_program(TMPLCC cppcms_tmpl_cc)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/Modules/")
 
 find_package(CppCms REQUIRED)
 include_directories(${CppCms_INCLUDE_DIRS})
-set(LIBS ${LIBS} ${CppCms_LIBRARIES})
 
+find_library(BOOSTER booster)
 
-set(TEMPLATES src/login_details.tmpl)
+set(LIBS ${LIBS} ${CppCms_LIBRARIES} ${BOOSTER})
+
+# add_custom_command(
+#    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/*.cpp
+#    COMMAND cppcms_tmpl_cc ${TEMPLATES}  -o ${CMAKE_CURRENT_BINARY_DIR}/login_details.cpp
+#                ${TEMPLATES}
+#    DEPENDS ${TEMPLATES})
+
 
 add_custom_command(
-   OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/login_details.cpp
-   COMMAND cppcms_tmpl_cc
-               ${TEMPLATES}
-               -o ${CMAKE_CURRENT_BINARY_DIR}/login_details.cpp
-               ${TEMPLATES}
-   DEPENDS ${TEMPLATES})
+	OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/view.cpp
+	COMMAND ${TMPLCC}
+		-d skin1
+		-o ${CMAKE_CURRENT_BINARY_DIR}/view.cpp 
+		${TEMPLATES}
+	DEPENDS ${TEMPLATES})
 
-
-
-
-
+add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_BINARY_DIR}/view.cpp  ${SRC_LIST})
 target_link_libraries(homesec-server ${LIBS})
+
 
 INSTALL(PROGRAMS homesec-server DESTINATION bin)
 
