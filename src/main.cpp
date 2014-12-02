@@ -21,10 +21,9 @@ public:
 
 void hello::main(std::string /*url*/)
 {
-
    content::LoginPageContent c;
    c.text=">>>Hello<<<";
-   render("message",c);
+   render("LoginPageContent",c);
 }
 
 

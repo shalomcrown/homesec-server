@@ -1,5 +1,6 @@
 project(homesec-server)
 cmake_minimum_required(VERSION 2.8.3)
+INCLUDE(CPack)
 
 SET(MAJOR_VERSION "0")
 SET(MINOR_VERSION "0")
@@ -20,10 +21,12 @@ find_library(BOOSTER booster)
 
 set(LIBS ${LIBS} ${CppCms_LIBRARIES} ${BOOSTER})
 
+set(CMAKE_BUILD_TYPE Debug)
+
 add_custom_command(
 	OUTPUT ${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/view.cpp
 	COMMAND ${TMPLCC}
-		-d skin1
+		-d login_details_skin
 		-o ${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/view.cpp 
 		${TEMPLATES}
 	DEPENDS ${TEMPLATES})
@@ -33,6 +36,8 @@ target_link_libraries(homesec-server ${LIBS})
 
 
 INSTALL(PROGRAMS homesec-server DESTINATION bin)
+INSTALL(FILES homesec-server-config.js DESTINATION etc)
+
 
 SET (CMAKE_PROJECT_NAME "homesec-server")
 
@@ -43,7 +48,7 @@ INCLUDE(InstallRequiredSystemLibraries)
 SET(CPACK_SET_DESTDIR "on")
 SET(CPACK_PACKAGING_INSTALL_PREFIX "/tmp")
 SET(CPACK_GENERATOR "DEB")
-SET (CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+SET(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
 
 
 SET(CPACK_PACKAGE_DESCRIPTION "Homesec server attemp with CppCms")
@@ -57,12 +62,13 @@ SET(CPACK_SOURCE_PACKAGE_FILE_NAME "${CMAKE_PROJECT_NAME}_${MAJOR_VERSION}.${MIN
 #demo dependencies
 #SET(CPACK_DEBIAN_PACKAGE_DEPENDS " kate , plasma-desktop, libc6 (>= 2.1.3) ")
 
+#SET(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA <yourpath_to>/postinst)
+
 SET(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
 #SET(CPACK_DEBIAN_PACKAGE_SECTION "kde")
 SET(CPACK_DEBIAN_ARCHITECTURE ${CMAKE_SYSTEM_PROCESSOR})
 
 SET(CPACK_COMPONENTS_ALL Libraries ApplicationData)
-INCLUDE(CPack)
 
 ENDIF(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 
