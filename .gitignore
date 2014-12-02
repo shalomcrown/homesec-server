@@ -10,4 +10,10 @@ homesec-server
 homesec-server.cbp
 homesec-server_*.deb
 install_manifest.txt
+.cproject
+.project
+homesec-server.kdevelop
+homesec-server.kdevelop.filelist
+homesec-server.kdevses
+homesec-server.layout
 

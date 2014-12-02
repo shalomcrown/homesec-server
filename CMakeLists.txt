@@ -20,22 +20,15 @@ find_library(BOOSTER booster)
 
 set(LIBS ${LIBS} ${CppCms_LIBRARIES} ${BOOSTER})
 
-# add_custom_command(
-#    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/*.cpp
-#    COMMAND cppcms_tmpl_cc ${TEMPLATES}  -o ${CMAKE_CURRENT_BINARY_DIR}/login_details.cpp
-#                ${TEMPLATES}
-#    DEPENDS ${TEMPLATES})
-
-
 add_custom_command(
-	OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/view.cpp
+	OUTPUT ${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/view.cpp
 	COMMAND ${TMPLCC}
 		-d skin1
-		-o ${CMAKE_CURRENT_BINARY_DIR}/view.cpp 
+		-o ${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/view.cpp 
 		${TEMPLATES}
 	DEPENDS ${TEMPLATES})
 
-add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_BINARY_DIR}/view.cpp  ${SRC_LIST})
+add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/view.cpp  ${SRC_LIST})
 target_link_libraries(homesec-server ${LIBS})
 
 
