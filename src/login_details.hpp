@@ -2,12 +2,26 @@
 #define LOGIN_DETAILS_HPP
 #include <cppcms/view.h>
 #include <cppcms/form.h>
+#include <string>
+
 
 namespace content  {
 
     struct LoginForm : public cppcms::form  {
-    	std::string  userName;
-    	std::string  password;
+        cppcms::widgets::text       userName;
+        cppcms::widgets::password   password;
+
+        static const std::string formName;
+
+        LoginForm() {
+            userName.message("User name");
+            password.message("Password");
+
+            add(userName);
+            add(password);
+            userName.non_empty();
+            password.non_empty();
+        }
     };
 
 
@@ -34,8 +48,6 @@ namespace content  {
     };
 
     struct LoginPageContent : public cppcms::base_content {
-        std::string text;
-
          LoginForm loginForm;
          NewUserForm newUserForm;
     };

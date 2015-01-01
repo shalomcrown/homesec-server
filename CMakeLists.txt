@@ -8,6 +8,7 @@ SET(PATCH_VERSION "1")
 
 aux_source_directory(src SRC_LIST)
 file(GLOB_RECURSE TEMPLATES ${PROJECT_SOURCE_DIR}/*.tmpl)
+file(GLOB_RECURSE STATIC_CONTENT ${PROJECT_SOURCE_DIR}/static/*)
 include_directories(src)
 
 find_program(TMPLCC cppcms_tmpl_cc)
@@ -27,7 +28,7 @@ add_custom_command(
 	OUTPUT ${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/view.cpp
 	COMMAND ${TMPLCC}
 		-d login_details_skin
-		-o ${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/view.cpp 
+		-o ${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/view.cpp
 		${TEMPLATES}
 	DEPENDS ${TEMPLATES})
 
@@ -35,8 +36,9 @@ add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTOR
 target_link_libraries(homesec-server ${LIBS})
 
 
-INSTALL(PROGRAMS homesec-server DESTINATION bin)
-INSTALL(FILES homesec-server-config.js DESTINATION etc)
+INSTALL(PROGRAMS homesec-server DESTINATION local/share/homesec)
+INSTALL(FILES homesec-server-config.js DESTINATION local/share/homesec)
+INSTALL(FILES ${STATIC_CONTENT} DESTINATION local/share/homesec)
 
 
 SET (CMAKE_PROJECT_NAME "homesec-server")
@@ -73,3 +75,5 @@ SET(CPACK_COMPONENTS_ALL Libraries ApplicationData)
 ENDIF(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 
 
+add_subdirectory(src/static)
+add_subdirectory(debian)

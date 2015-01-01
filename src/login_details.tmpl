@@ -2,17 +2,20 @@
 <% skin login_details_skin %>
 <% view LoginPageContent uses content::LoginPageContent %>
 <% template render() %>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
   <body>
-	<h1><%= text %> World!</h1>
   	<h1><Welcome to Homesec Server </h1>
   	<h2>If you already have an account, login here</h2>
-  	<form method="post" action="" id="login_form">
+  	<form method="post" action="" id="<%= loginForm.formName %>">
 	  <% form as_p loginForm %>
+	  <button type="submit">Log in</button>
 	</form>
 	<h2>To register a new account:</h2>
   	<form method="post" action="" id="newuser_form">
 	  <% form as_p newUserForm %>
+      <button type="submit">Create account</button>
 	</form>
   </body>
 </html>
