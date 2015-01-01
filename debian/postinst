@@ -1,0 +1,3 @@
+#!/bin/bash
+
+ln -sf local/share/homesec/homesec-server.sh /usr/bin/homesec-server
