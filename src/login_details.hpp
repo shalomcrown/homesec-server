@@ -11,6 +11,7 @@ namespace content  {
         cppcms::widgets::text       userName;
         cppcms::widgets::password   password;
 
+
         static const std::string formName;
 
         LoginForm() {
@@ -25,26 +26,26 @@ namespace content  {
     };
 
 
-    struct NewUserForm : public cppcms::form  {
-    	cppcms::widgets::text  		userName;
-    	cppcms::widgets::password  	password;
-    	cppcms::widgets::password  	passwordRepeat;
-		cppcms::widgets::text  		email;
+struct NewUserForm : public cppcms::form  {
+    cppcms::widgets::text  		userName;
+    cppcms::widgets::password  	password;
+    cppcms::widgets::password  	passwordRepeat;
+    cppcms::widgets::text  		email;
 
-		NewUserForm() {
-			userName.message("Select a  user name")	;
-			password.message("Choose a password");
-			passwordRepeat.message("Enter password again");
-			email.message("Enter your email");
+    NewUserForm() {
+        userName.message ( "Select a  user name" )	;
+        password.message ( "Choose a password" );
+        passwordRepeat.message ( "Enter password again" );
+        email.message ( "Enter your email" );
 
-			add(userName);
-			add(passwordRepeat);
-			add(passwordRepeat);
-			add(email);
+        add ( userName );
+        add ( passwordRepeat );
+        add ( passwordRepeat );
+        add ( email );
 
-			userName.non_empty();
+        userName.non_empty();
 
-		}
+        }
     };
 
     struct LoginPageContent : public cppcms::base_content {
