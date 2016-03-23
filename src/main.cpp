@@ -55,7 +55,7 @@ void homesecApp::serve_file(std::string file_name) {
         response().status(404);
         response().out() << "Not found";
     } else {
-        response().content_type("application/octet-stream");
+        response().content_type("application/css");
         response().set_header("Content-Disposition", "inline");
         response().out() << f.rdbuf();
     }

@@ -16,11 +16,13 @@ find_program(TMPLCC cppcms_tmpl_cc)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/Modules/")
 
 find_package(CppCms REQUIRED)
+find_package(MAGIC REQUIRED)
 include_directories(${CppCms_INCLUDE_DIRS})
 
 find_library(BOOSTER booster)
 
-set(LIBS ${LIBS} ${CppCms_LIBRARIES} ${BOOSTER})
+
+set(LIBS ${LIBS} ${CppCms_LIBRARIES} ${BOOSTER} ${MAGIC_LIBRARY} )
 
 set(CMAKE_BUILD_TYPE Debug)
 
