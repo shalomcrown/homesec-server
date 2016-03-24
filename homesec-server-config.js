@@ -8,7 +8,7 @@
     },
     "logging" : {
        "level" : "debug"
-    }
+    },
 
     "views" : {
         "paths" : [ "." ],
