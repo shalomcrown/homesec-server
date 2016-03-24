@@ -25,7 +25,7 @@ find_library(BOOSTER booster)
 set(LIBS ${LIBS} ${CppCms_LIBRARIES} ${BOOSTER} ${MAGIC_LIBRARY} )
 
 set(CMAKE_BUILD_TYPE Debug)
-#set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
 
 add_custom_command(
         OUTPUT ${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/login_details.cpp
@@ -36,12 +36,26 @@ add_custom_command(
 	DEPENDS ${TEMPLATES})
 
 
-add_library(login_details SHARED ${CMAKE_CURRENT_BINARY_DIR}/login_details.cpp)
+#add_library(login_details SHARED ${CMAKE_CURRENT_BINARY_DIR}/login_details.cpp)
 
 file(GLOB SOURCES "src/*.cpp" ${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/login_details.cpp)
 add_executable(${PROJECT_NAME} ${SOURCES})
 target_link_libraries(homesec-server ${LIBS})
 
+configure_file(homesec-server-config.js homesec-server-config.js COPYONLY)
+
+
+
+foreach(templateFile ${STATIC_CONTENT})
+        if(NOT IS_DIRECTORY ${templateFile})
+            message(STATUS "Configuring file ${templateFile}")
+            configure_file(${templateFile}  ${templateFile} COPYONLY)
+        endif(NOT IS_DIRECTORY ${templateFile})
+endforeach(templateFile)
+
+# add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+#                    COMMAND ${CMAKE_COMMAND} -E copy_directory
+#                             ${CMAKE_SOURCE_DIR}/src/static ${PROJECT_BINARY_DIR})
 
 INSTALL(PROGRAMS homesec-server DESTINATION local/share/homesec)
 INSTALL(FILES homesec-server-config.js DESTINATION local/share/homesec)
