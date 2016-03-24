@@ -25,7 +25,7 @@ find_library(BOOSTER booster)
 set(LIBS ${LIBS} ${CppCms_LIBRARIES} ${BOOSTER} ${MAGIC_LIBRARY} )
 
 set(CMAKE_BUILD_TYPE Debug)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
+#set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
 
 add_custom_command(
         OUTPUT ${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/login_details.cpp
@@ -38,7 +38,7 @@ add_custom_command(
 
 add_library(login_details SHARED ${CMAKE_CURRENT_BINARY_DIR}/login_details.cpp)
 
-file(GLOB SOURCES "src/*.cpp")
+file(GLOB SOURCES "src/*.cpp" ${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/login_details.cpp)
 add_executable(${PROJECT_NAME} ${SOURCES})
 target_link_libraries(homesec-server ${LIBS})
 
