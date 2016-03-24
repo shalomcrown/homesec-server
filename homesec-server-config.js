@@ -9,4 +9,9 @@
     "logging" : {
        "level" : "debug"
     }
+
+    "views" : {
+        "paths" : [ "." ],
+        "skins" : [ "login_details" ]
+    }
 }
