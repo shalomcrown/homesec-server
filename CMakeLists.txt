@@ -29,14 +29,14 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
 
 add_custom_command(
         OUTPUT ${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/login_details.cpp
-	COMMAND ${TMPLCC}
-		-d login_details_skin
+    COMMAND ${TMPLCC}
+        -d login_details_skin
                 -o ${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/login_details.cpp
-		${TEMPLATES}
-	DEPENDS ${TEMPLATES})
+        ${TEMPLATES}
+    DEPENDS ${TEMPLATES})
 
 
-#add_library(login_details SHARED ${CMAKE_CURRENT_BINARY_DIR}/login_details.cpp)
+add_library(login_details SHARED ${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/login_details.cpp)
 
 file(GLOB SOURCES "src/*.cpp" ${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/login_details.cpp)
 add_executable(${PROJECT_NAME} ${SOURCES})
@@ -44,14 +44,14 @@ target_link_libraries(homesec-server ${LIBS})
 
 configure_file(homesec-server-config.js homesec-server-config.js COPYONLY)
 
+file(COPY ${PROJECT_SOURCE_DIR}/src/static/ DESTINATION static)
 
-
-foreach(templateFile ${STATIC_CONTENT})
-        if(NOT IS_DIRECTORY ${templateFile})
-            message(STATUS "Configuring file ${templateFile}")
-            configure_file(${templateFile}  ${templateFile} COPYONLY)
-        endif(NOT IS_DIRECTORY ${templateFile})
-endforeach(templateFile)
+# foreach(templateFile ${STATIC_CONTENT})
+#         if(NOT IS_DIRECTORY ${templateFile})
+#             message(STATUS "Configuring file ${templateFile}")
+#             configure_file(${templateFile}  ${templateFile} COPYONLY)
+#         endif(NOT IS_DIRECTORY ${templateFile})
+# endforeach(templateFile)
 
 # add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
 #                    COMMAND ${CMAKE_COMMAND} -E copy_directory

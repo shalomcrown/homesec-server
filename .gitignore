@@ -18,4 +18,6 @@ homesec-server.kdevses
 homesec-server.layout
 .kdev4/
 homesec-server.kdev4
+build/
+liblogin_details.so
 
